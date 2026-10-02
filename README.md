@@ -7,7 +7,40 @@ trashes or deletes.
 Categories (edit them in `config.toml`): Urgent, Needs-Reply, FYI, Jobs, Newsletter, Promotions,
 Receipts-Notifications.
 
-Results from a real run (redacted): [docs/sample-output.md](docs/sample-output.md).
+## Sample output
+
+From the first real runs against a personal inbox (model `gpt-5.4-mini`). Senders and subjects
+are redacted; categories and confidences are the model's actual output.
+
+`uv run triage run --dry-run --limit 10` prints what it would label, without touching Gmail:
+
+```
+Jobs                     0.99  <job board alerts>                        <job alert digest>
+Jobs                     0.99  <job board alerts>                        <job alert digest>
+Jobs                     0.99  <job board alerts>                        <job alert digest>
+Jobs                     0.99  <job board alerts>                        <job alert digest>
+Jobs                     0.99  <recruiter>                               Hiring Java Developer + Microservices + Cloud
+Jobs                     0.99  <recruiter>                               Job | Java Full Stack Developer (Remote)
+Jobs                     0.99  <recruiter>                               Job | Openings for Elastic Search / Vector search
+Jobs                     0.99  <job board alerts>                        Recruiters are searching for roles similar to yours
+Receipts-Notifications   0.96  GitHub <noreply@github.com>               [GitHub] App is requesting updated permissions
+Jobs                     0.99  <recruiter>                               Job | Java Developer
+```
+
+The log at `~/Library/Logs/email-triage/triage.log` gets one line per email, plus a summary per run:
+
+```
+2026-10-02 11:12:51 INFO <msg-id> Receipts-Notifications (0.98) '[GitHub] App is requesting updated permissions': This is an automated GitHub account notification about app permission changes, not a personal message or marketing email.
+2026-10-02 11:12:51 INFO Run complete: found=10 labeled=10 skipped=0 failed=0
+2026-10-02 11:14:35 INFO Run complete: found=40 labeled=40 skipped=0 failed=0
+```
+
+Result after the first scheduled run: 50 emails labeled, 0 failed. 40 went to `Triage/Jobs`,
+9 to `Triage/Receipts-Notifications` and 1 to `Triage/Promotions`. Five synthetic test emails,
+including a prompt-injection attempt, were all classified correctly.
+
+Full redacted results, before/after tuning, and a known miss:
+[docs/sample-output.md](docs/sample-output.md).
 
 ## One-time setup
 
