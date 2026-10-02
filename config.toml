@@ -1,0 +1,35 @@
+# Email triage configuration. Category descriptions are sent to the model,
+# so edit them to steer classification.
+
+model = "gpt-5.4-mini"
+label_prefix = "Triage"
+lookback_days = 2
+max_per_run = 50
+
+[[categories]]
+name = "Urgent"
+description = "Time-sensitive and important: needs my action today (deadlines, outages, security alerts about my accounts, messages from people waiting on me right now)."
+
+[[categories]]
+name = "Needs-Reply"
+description = "A real person wrote to me personally and expects a response, but it is not urgent."
+
+[[categories]]
+name = "FYI"
+description = "Personal or work information worth reading but requiring no reply or action (updates, CCs, announcements addressed to me)."
+
+[[categories]]
+name = "Jobs"
+description = "Anything about job opportunities: job alerts (LinkedIn, Naukri, etc.), recruiter or hiring outreach, application updates. Use this instead of Newsletter or Promotions for job-related mail."
+
+[[categories]]
+name = "Newsletter"
+description = "Subscribed content: newsletters, digests, blog/Substack posts, community mailing lists."
+
+[[categories]]
+name = "Promotions"
+description = "Marketing, sales, offers, discounts, product launches, cold outreach."
+
+[[categories]]
+name = "Receipts-Notifications"
+description = "Automated transactional mail: receipts, invoices, order/shipping updates, bank alerts, app/service notifications, OTPs, calendar notices."
